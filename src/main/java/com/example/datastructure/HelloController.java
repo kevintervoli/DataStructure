@@ -2,6 +2,7 @@ package com.example.datastructure;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -32,38 +33,46 @@ public class HelloController {
     HBox pane = new HBox();
     @FXML
     public void AddFirstButtonClicked(ActionEvent event) throws IOException {
-        // create a material from the image file
-        Material mat = new PhongMaterial();
-        FileInputStream imgStream = null;
-        imgStream = new FileInputStream("Images/color.jpg");
-        Image img = new Image(imgStream);
-        ((PhongMaterial) mat).setDiffuseMap(img);
-        // set the material to the sphere
-        ((PhongMaterial) mat).setSpecularColor(Color.AQUAMARINE);
-        // create a sphere
-        Sphere circle = new Sphere();
-        circle.setRadius(70);
-        // create a label
-        Label label = new Label();
-        label.setFont(new Font("Forte", 18));
-        label.setText(((int) (Math.random() * 13) + ""));
-        // set the material to the sphere
-        circle.setMaterial(mat);
-        circle.setCullFace(CullFace.BACK);
-        circle.setDrawMode(DrawMode.FILL);
-        // add them to queue
-        sphereQueue.addFirst(circle);
-        labelQueue.addFirst(label);
-        int i = 0;
-        int j = 0;
-        // add them to the pane which will updated after every new addition
-        while (i < sphereQueue.size()) {
-            StackPane temp = new StackPane();
-            temp.getChildren().addAll(sphereQueue.getFirst(), labelQueue.getFirst());
-            i++;
-            j++;
-            // add nodes before the first node in the pane
-            pane.getChildren().add(0, temp);
+        if(!isFull()) {
+            // create a material from the image file
+            Material mat = new PhongMaterial();
+            FileInputStream imgStream = null;
+            imgStream = new FileInputStream("Images/color.jpg");
+            Image img = new Image(imgStream);
+            ((PhongMaterial) mat).setDiffuseMap(img);
+            // set the material to the sphere
+            ((PhongMaterial) mat).setSpecularColor(Color.AQUAMARINE);
+            // create a sphere
+            Sphere circle = new Sphere();
+            circle.setRadius(70);
+            // create a label
+            Label label = new Label();
+            label.setFont(new Font("Forte", 18));
+            label.setText(((int) (Math.random() * 13) + ""));
+            // set the material to the sphere
+            circle.setMaterial(mat);
+            circle.setCullFace(CullFace.BACK);
+            circle.setDrawMode(DrawMode.FILL);
+            // add them to queue
+            sphereQueue.addFirst(circle);
+            labelQueue.addFirst(label);
+            int i = 0;
+            int j = 0;
+            // add them to the pane which will updated after every new addition
+            while (i < sphereQueue.size()) {
+                StackPane temp = new StackPane();
+                temp.getChildren().addAll(sphereQueue.getFirst(), labelQueue.getFirst());
+                i++;
+                j++;
+                // add nodes before the first node in the pane
+                pane.getChildren().add(0, temp);
+            }
+        }
+        else {
+            Alert fail = new Alert(Alert.AlertType.WARNING);
+            fail.setHeaderText("FAIL");
+            fail.setContentText("Data structure is full");
+            fail.showAndWait();
         }
         // update border pane in order not to show a new pop up window
         bp.setCenter(pane);
@@ -72,31 +81,42 @@ public class HelloController {
     public boolean isEmpty() {
         return (sphereQueue.size() == 0 && labelQueue.size() == 0);
     }
-
+    public boolean isFull() {
+        return (sphereQueue.size() == 5 && labelQueue.size() == 5);
+    }
     public void AddLastButtonClicked() throws FileNotFoundException {
-        Material mat = new PhongMaterial();
-        FileInputStream imgStream = null;
-        imgStream = new FileInputStream("Images/color.jpg");
-        Image img = new Image(imgStream);
-        ((PhongMaterial) mat).setDiffuseMap(img);
-        ((PhongMaterial) mat).setSpecularColor(Color.AQUAMARINE);
-        Sphere circle = new Sphere();
-        Label label = new Label();
-        label.setFont(new Font("Forte", 18));
-        label.setText(((int) (Math.random() * 13) + ""));
-        circle.setRadius(70);
-        circle.setMaterial(mat);
-        circle.setCullFace(CullFace.BACK);
-        circle.setDrawMode(DrawMode.FILL);
-        ;
-        sphereQueue.addLast(circle);
-        labelQueue.addLast(label);
-        int i = 0;
-        while (i < sphereQueue.size()) {
-            StackPane temp = new StackPane();
-            temp.getChildren().addAll(sphereQueue.getLast(), labelQueue.getLast());
-            i++;
-            pane.getChildren().add(temp);
+        if(!isFull()) {
+            // create a material from the image file
+            Material mat = new PhongMaterial();
+            FileInputStream imgStream = null;
+            imgStream = new FileInputStream("Images/color.jpg");
+            Image img = new Image(imgStream);
+            ((PhongMaterial) mat).setDiffuseMap(img);
+            ((PhongMaterial) mat).setSpecularColor(Color.AQUAMARINE);
+            Sphere circle = new Sphere();
+            Label label = new Label();
+            label.setFont(new Font("Forte", 18));
+            label.setText(((int) (Math.random() * 13) + ""));
+            circle.setRadius(70);
+            circle.setMaterial(mat);
+            circle.setCullFace(CullFace.BACK);
+            circle.setDrawMode(DrawMode.FILL);
+            ;
+            sphereQueue.addLast(circle);
+            labelQueue.addLast(label);
+            int i = 0;
+            while (i < sphereQueue.size()) {
+                StackPane temp = new StackPane();
+                temp.getChildren().addAll(sphereQueue.getLast(), labelQueue.getLast());
+                i++;
+                pane.getChildren().add(temp);
+            }
+        }
+        else {
+            Alert fail = new Alert(Alert.AlertType.WARNING);
+            fail.setHeaderText("FAIL");
+            fail.setContentText("Data structure is full");
+            fail.showAndWait();
         }
         bp.setCenter(pane);
 
