@@ -57,13 +57,11 @@ public class HelloController {
             sphereQueue.addFirst(circle);
             labelQueue.addFirst(label);
             int i = 0;
-            int j = 0;
             // add them to the pane which will updated after every new addition
             while (i < sphereQueue.size()) {
                 StackPane temp = new StackPane();
                 temp.getChildren().addAll(sphereQueue.getFirst(), labelQueue.getFirst());
                 i++;
-                j++;
                 // add nodes before the first node in the pane
                 pane.getChildren().add(0, temp);
             }
@@ -101,7 +99,7 @@ public class HelloController {
             circle.setMaterial(mat);
             circle.setCullFace(CullFace.BACK);
             circle.setDrawMode(DrawMode.FILL);
-            ;
+
             sphereQueue.addLast(circle);
             labelQueue.addLast(label);
             int i = 0;
@@ -125,7 +123,10 @@ public class HelloController {
     public void removeFirst() {
         // remove the first node from the pane
         if (sphereQueue.isEmpty()) {
-            return;
+            Alert fail = new Alert(Alert.AlertType.ERROR);
+            fail.setHeaderText("FAIL");
+            fail.setContentText("THE DEQUEUE IS EMPTY");
+            fail.showAndWait();
         } else if (sphereQueue.size() == 1) {
             // if the size of the queue is 1, remove the first node from the pane
             pane.getChildren().remove(0);
@@ -141,7 +142,10 @@ public class HelloController {
 
     public void removeLast() {
         if (isEmpty()) {
-            return;
+            Alert fail = new Alert(Alert.AlertType.ERROR);
+            fail.setHeaderText("FAIL");
+            fail.setContentText("THE DEQUEUE IS EMPTY");
+            fail.showAndWait();
         } else if (sphereQueue.size() == 1) {
             // if the size of the queue is 1, remove th last  node from the pane
             pane.getChildren().remove(pane.getChildren().size() - 1);
